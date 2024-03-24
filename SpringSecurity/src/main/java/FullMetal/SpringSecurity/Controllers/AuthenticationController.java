@@ -1,8 +1,8 @@
 package FullMetal.SpringSecurity.Controllers;
 
-import FullMetal.SpringSecurity.DTO.AuthenticationRequest;
-import FullMetal.SpringSecurity.DTO.AuthenticationResponse;
-import FullMetal.SpringSecurity.DTO.RegisterRequest;
+import FullMetal.SpringSecurity.DTO.Request.AuthenticationRequest;
+import FullMetal.SpringSecurity.DTO.Response.AuthenticationResponse;
+import FullMetal.SpringSecurity.DTO.Request.RegisterRequest;
 import FullMetal.SpringSecurity.Services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
