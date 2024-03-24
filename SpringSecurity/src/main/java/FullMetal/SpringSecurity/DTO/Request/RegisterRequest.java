@@ -1,4 +1,4 @@
-package FullMetal.SpringSecurity.DTO;
+package FullMetal.SpringSecurity.DTO.Request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

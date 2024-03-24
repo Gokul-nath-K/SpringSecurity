@@ -1,8 +1,8 @@
 package FullMetal.SpringSecurity.Services.Implementations;
 
-import FullMetal.SpringSecurity.DTO.AuthenticationRequest;
-import FullMetal.SpringSecurity.DTO.AuthenticationResponse;
-import FullMetal.SpringSecurity.DTO.RegisterRequest;
+import FullMetal.SpringSecurity.DTO.Request.AuthenticationRequest;
+import FullMetal.SpringSecurity.DTO.Response.AuthenticationResponse;
+import FullMetal.SpringSecurity.DTO.Request.RegisterRequest;
 import FullMetal.SpringSecurity.Models.Enumerate.Role;
 import FullMetal.SpringSecurity.Models.User;
 import FullMetal.SpringSecurity.Repository.UserRepository;
