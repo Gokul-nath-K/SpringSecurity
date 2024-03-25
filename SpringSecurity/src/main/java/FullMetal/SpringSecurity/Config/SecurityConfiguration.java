@@ -9,6 +9,7 @@ import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.HttpMethod.PUT;
 
+import FullMetal.SpringSecurity.Utils.LogoutService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -35,6 +37,7 @@ public class SecurityConfiguration {
 
     private final JwtAthenticationFilter jwtAthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
+    private final LogoutService logoutService;
 
     private static final String[] PublicEndPoints = {
             "/api/auth/**",
@@ -47,10 +50,8 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(corsConfirguarationSource -> {
-                    corsConfirguarationSource.configurationSource(
-                            corsConfigurationSource());
-                })
+                .cors(corsConfirguarationSource -> corsConfirguarationSource.configurationSource(
+                        corsConfigurationSource()))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(PublicEndPoints)
                         .permitAll()
@@ -81,7 +82,10 @@ public class SecurityConfiguration {
                 .sessionManagement(management -> management
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .logout(logout -> logout.logoutUrl("/api/auth/logout")
+                        .addLogoutHandler(logoutService)
+                        .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext()));
 
         return httpSecurity.build();
     }
