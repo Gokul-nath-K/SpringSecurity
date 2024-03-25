@@ -42,7 +42,7 @@ public class AuthenticationImpl implements AuthenticationService {
                 .email(request.getEmail())
                 .phone(request.getPhone())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
+                .role(Role.valueOf(request.getRole().toUpperCase()))
                 .build();
 
         userRepository.save(user);
